@@ -2,7 +2,8 @@ import random
 import logo
 
 
-def number_guesser(correct_answer, chances):
+def number_checker(correct_answer, chances):
+    # This function takes the correct answer and the number of turns to guess and checks whether the user got it right
     for i in range(0, chances):
         print(f"You have {chances - i} remaining to guess the number.")
         user_answer = int(input("Make a guess: "))
@@ -16,19 +17,29 @@ def number_guesser(correct_answer, chances):
     return -1
 
 
-secret_number = random.randint(0, 100)
-print(logo.logo)
-print("Welcome to the number guessing game!")
-result = 0
-difficulty_level = input("I'm thinking of a number between 1 and 100.\nChoose a difficulty. Type 'easy' or 'hard': ")
-if difficulty_level == "easy":
-    result = number_guesser(secret_number, 10)
-elif difficulty_level == "hard":
-    result = number_guesser(secret_number, 5)
-else:
-    print("Wrong choice! Please try again.")
+def set_difficulty():
+    # This function set the difficulty of the game depending on user's choice.
+    difficulty_level = input("I'm thinking of a number between 1 and 100.\nChoose a difficulty."
+                             " Type 'easy' or 'hard': ")
+    if difficulty_level == "easy":
+        return 10
+    elif difficulty_level == "hard":
+        return 5
+    else:
+        print("Wrong choice! Please try again.")
 
-if result == 0:
-    print("Congratulations! You got it right.")
-else:
-    print(f"You couldn't guess the number. You lose!\nThe correct answer is {secret_number}")
+
+def game():
+    # This is the main game function that controls the flow of the game.
+    secret_number = random.randint(0, 100)
+    print(logo.logo)
+    print("Welcome to the number guessing game!")
+    no_of_chances = set_difficulty()
+    result = number_checker(secret_number, no_of_chances)
+    if result == 0:
+        print("\nCongrats! You got it right.")
+    elif result == -1:
+        print(f"Sorry! You couldn't guess the number.\n The correct answer is {secret_number}")
+
+
+game()
